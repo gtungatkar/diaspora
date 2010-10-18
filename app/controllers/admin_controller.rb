@@ -1,3 +1,3 @@
-class AdminController
+class AdminController < Devise::RegistrationsController
   #Code here
 end
