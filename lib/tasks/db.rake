@@ -20,6 +20,11 @@ namespace :db do
       require File.dirname(__FILE__) + '/../../db/seeds/backer'
       create
     end
+    task :admin_dev do
+         puts "Seeding the database for #{Rails.env}..."
+         require File.dirname(__FILE__) + '/../../db/seeds/admin_dev'
+        
+       end
 
   end
 
