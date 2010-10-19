@@ -11,4 +11,11 @@ class Admin
   key :username
   key :password
   key :password_confirmation
+
+ def self.find_for_authentication(conditions={})
+    if conditions[:username] =~ /^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i # email regex
+      conditions[:email] = conditions.delete(:username)
+    end
+    super
+  end
 end
