@@ -392,7 +392,7 @@ class User
   end
 
   def diaspora_handle
-    "#{self.username}@#{APP_CONFIG[:terse_pod_url]}".downcase
+    "#{self.username}@#{APP_CONFIG[:terse_pod_url]}"
   end
 
   def as_json(opts={})
