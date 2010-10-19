@@ -1,1 +1,9 @@
+
 %h1 Welcome Admin
+- content_for :head do
+  :javascript
+    $(document).ready(function(){
+      $("#add_admin_button").fancybox();
+    });
+- form_tag update_signups_admin_index_path do
+  = submit_tag(value = "Allow Sign up", :confirm =>'Do you want to open registration for all users?')

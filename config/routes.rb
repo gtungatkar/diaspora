@@ -15,6 +15,12 @@ Diaspora::Application.routes.draw do
                                       :invitations    => "invitations"}
   devise_for :admin
   match 'admin/index', :to => 'admin#index', :as => "admin_root"
+  match 'admin/update_signups', :to => 'admin#update_signups'
+  resources :admin do
+    collection do
+      put :update_signups 
+    end
+  end
 
   #root :to => "/admins"
   # added public route to user
