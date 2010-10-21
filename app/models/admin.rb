@@ -2,9 +2,9 @@ class Admin
   #Code here
   include MongoMapper::Document
   plugin MongoMapper::Devise
-
+  
   devise :invitable, :database_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :trackable, :validatable
 
   attr_accessible :email, :password, :password_confirmation
   

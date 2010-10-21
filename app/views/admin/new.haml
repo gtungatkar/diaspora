@@ -1,0 +1,6 @@
+%h2 Invite Users
+= form_for Admin.new, :url => invitation_path(Admin) do |f|
+  = f.label :email
+  = f.text_field :email
+  = f.submit "Send an invitation"
+
