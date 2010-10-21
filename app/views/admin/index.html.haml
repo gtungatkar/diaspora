@@ -6,4 +6,9 @@
       $("#add_admin_button").fancybox();
     });
 - form_tag update_signups_admin_index_path do
-  = submit_tag(value = "Allow Sign up", :confirm =>'Do you want to open registration for all users?')
+  - if AdminSettings.reg_open?
+    = submit_tag(value = "Close Registration")
+    = hidden_field_tag("reg", "close")
+  - else
+    = submit_tag(value = "Open Registration", :name=> "open")
+    = hidden_field_tag("reg","open")
