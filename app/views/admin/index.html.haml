@@ -6,24 +6,13 @@
       $("#add_admin_button").fancybox();
     });
 - form_tag update_signups_admin_index_path do
-  = submit_tag(value = "Allow Sign up", :confirm =>'Do you want to open registration for all users?')
-
-%h4 
-= link_to "Invite a friend!", "new", :class => "invite_user_button", :title => "Invite a friend"
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
+  =# submit_tag(value = "Allow Sign up", :confirm =>'Do you want to open registration for all users?')
+  - if AdminSettings.reg_open?
+    = submit_tag(value = "Close Registration")
+    = hidden_field_tag("reg", "close")
+  - else
+    %h4
+    = link_to "Invite a friend!", "admin/new", :class => "invite_user_button", :title => "Invite a friend"
+    = submit_tag(value = "Open Registration", :name=> "open")
+    = hidden_field_tag("reg","open")
 
