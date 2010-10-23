@@ -23,13 +23,21 @@ class AdminSettings
 
   def self.open_registration
     a = AdminSettings.first()
-    a.registration_open = true
-    a.save
-    
+    if a != nil
+      a.registration_open = true
+      a.save
+      return true
+    end
+    return false
   end
+
   def self.close_registration
     a = AdminSettings.first()
-    a.registration_open = false
-    a.save
+    if a != nil
+      a.registration_open = false
+      a.save
+      return true
+    end
+    return false
   end
 end
