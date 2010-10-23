@@ -1,4 +1,3 @@
-
 %h1 Welcome Admin
 - content_for :head do
   :javascript
@@ -12,24 +11,5 @@
   - else
     = submit_tag(value = "Open Registration", :name=> "open")
     = hidden_field_tag("reg","open")
-
-%h4 
-= link_to "Invite a friend!", "new", :class => "invite_user_button", :title => "Invite a friend"
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
->>>>>>> added a link 'Invite a friend!'on the admin home page which redirects to admin/new
+    %h4 Invites
+    = link_to "Invite a friend", new_admin_invitation_path, :class => "invite_user_button", :title => "Invite a friend"

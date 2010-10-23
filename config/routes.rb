@@ -1,8 +1,9 @@
-#   Copyright (c) 2010, Diaspora Inc.  This file is
+#   Copyright (c) 2010, Diaspora Inc.  This file is                       
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
 Diaspora::Application.routes.draw do
+  
   resources :people,          :only   => [:index, :show, :destroy]
   resources :status_messages, :only   => [:create, :destroy, :show]
   resources :comments,        :except => [:index]
@@ -13,14 +14,28 @@ Diaspora::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations",
                                       :password      => "devise/passwords",
                                       :invitations    => "invitations"}
-  devise_for :admin
+
+  devise_for :admin, :controllers => {:registrations => "registrations",
+                                      :password      => "devise/passwords",
+                                      :invitations    => "admin_invitations"}
+
+  
+  #match 'admin_invitations/new', :to => 'admin_invitations#new'#, :as => "admin_root"
   match 'admin/index', :to => 'admin#index', :as => "admin_root"
   match 'admin/update_signups', :to => 'admin#update_signups'
+  #match 'admin_invitations/new', :to => 'admin_invitations#new', :as => 'new_admin_invitation', :via => :get
+  #match 'admin/invitation', :to => 'admin_invitations#create', :as => 'admin_invitation'
   resources :admin do
     collection do
-      put :update_signups 
-    end
+      put :update_signups
+   end
   end
+ # resources :admin_invitations
+  #resources :admin_invitations do
+  #  collection do
+  #    post :create
+  #    end
+  #end
 
   #root :to => "/admins"
   # added public route to user
