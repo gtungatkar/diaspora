@@ -33,7 +33,7 @@ class RegistrationsController < Devise::RegistrationsController
     if AdminSettings.reg_open?
       super
     else
-      flash[:notice] = "HEREE"
+      #flash[:notice] = "HEREE"
       redirect_to new_user_session_path
     end
   end

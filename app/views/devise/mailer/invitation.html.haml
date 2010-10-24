@@ -62,6 +62,7 @@
           Your account won't be created until you access the link above and sign up.
     - else
       #container
+        You are invited to join Diaspora ! 
         %p= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @resource.invitation_token), :class => "large_text"
         %p.small
           If you don't want to accept the invitation, please ignore this email.
