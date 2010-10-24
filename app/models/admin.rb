@@ -23,6 +23,10 @@ class Admin
   many :inviters, :in => :inviter_ids, :class_name => 'Admin'
   one :person, :class_name => 'Person', :foreign_key => :owner_id
   many :pending_requests, :in => :pending_request_ids, :class_name => 'Request'
+
+  validates_presence_of :username
+  validates_uniqueness_of :username, :case_sensitive => false
+    
   
  def self.find_for_authentication(conditions={})
     if conditions[:username] =~ /^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i # email regex
@@ -48,57 +52,14 @@ class Admin
     if u.nil?
       invitable = User.new#(:email => opts[:email])
       invitable.email = opts[:email]
+      invitable.invite_messages[:admin] = opts[:invite_message]
+      #invitable.inviters << self
       invitable.invite!
+    else
+      raise "User already present"
     end
   end
           
-  def self.invite!(attributes={})
-    inviter = attributes.delete(:inviter)
-    request = attributes.delete(:request)
 
-    invitable = find_or_initialize_with_error_by(:email, attributes.delete(:email))
-    invitable.attributes = attributes
-    if invitable.inviters.include?(inviter)
-      raise "You already invited this person"
-    else
-      invitable.pending_requests << request if request
-      invitable.inviters << inviter
-      message = attributes.delete(:invite_message)
-      if message
-        invitable.invite_messages[inviter.id.to_s] = message
-      end
-    end
-
-    if invitable.new_record?
-      invitable.errors.clear if invitable.email.try(:match, Devise.email_regexp)
-    else
-      invitable.errors.add(:email, :taken) unless invitable.invited?
-    end
-
-    invitable.invite! if invitable.errors.empty?
-    invitable
-  end
-
-  def accept_invitation!(opts = {})
-    if self.invited?
-      self.username              = opts[:username]
-      self.password              = opts[:password]
-      self.password_confirmation = opts[:password_confirmation]
-      opts[:person][:diaspora_handle] = "#{opts[:username]}@#{APP_CONFIG[:terse_pod_url]}"
-      opts[:person][:url] = APP_CONFIG[:pod_url]
-
-      opts[:serialized_private_key] = User.generate_key
-      self.serialized_private_key =  opts[:serialized_private_key]
-      opts[:person][:serialized_public_key] = opts[:serialized_private_key].public_key
-
-      person_hash = opts.delete(:person)
-      self.person = Person.create(person_hash)
-      self.person.save
-      self.invitation_token = nil
-      self.save
-      self
-    end
-  end
-  
 
 end
