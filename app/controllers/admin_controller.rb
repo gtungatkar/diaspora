@@ -21,4 +21,5 @@ class AdminController < ApplicationController
     redirect_to(admin_root_path)
     end
   #end
+  
 end

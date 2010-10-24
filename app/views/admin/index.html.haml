@@ -1,4 +1,4 @@
-%h1 Welcome Admin
+%h3 Welcome #{current_admin.username}
 - content_for :head do
   :javascript
     $(document).ready(function(){
@@ -11,5 +11,7 @@
   - else
     = submit_tag(value = "Open Registration", :name=> "open")
     = hidden_field_tag("reg","open")
-    %h4 Invites
-    = link_to "Invite a friend", new_admin_invitation_path, :class => "invite_user_button", :title => "Invite a friend"
+    /%h5 Invites
+    %br
+    %br
+    = link_to "Invite another user", new_admin_invitation_path, :class => "invite_user_button", :title => "Invite a friend"

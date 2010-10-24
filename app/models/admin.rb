@@ -62,10 +62,10 @@ class Admin
         u = User.find_by_email(opts[:email])
         if u.nil?
          Rails.logger.info "Email : #{opts[:email]}"
-         #invitable = find_or_initialize_with_error_by(:email, opts[:email])
-         invitable = User.new#(:email => opts[:email])
+         invitable = find_or_initialize_with_error_by(:email, opts[:email])
+         #invitable = User.new#(:email => opts[:email])
 
-         invitable.email = "try"
+         #invitable.email = #"try"
         #u = User.new.invite!(:email => opts[:email])
         Rails.logger.info "Invitable : #{invitable.email}"         
          invitable.invite!
@@ -76,6 +76,8 @@ class Admin
         #  return
         #elsif u.invited? && u.inviters.include?(self)
         #  raise "You already invited this person"
+        #else
+        #  flash[:notice] = "There is already a user with this email"
         end
      # end
 
@@ -85,13 +87,13 @@ class Admin
      # self.invites = self.invites - 1
       #self.pending_requests << request if request
       #request.save
-      self.save!
-      u
+      #self.save!
+      #u
     #else
     #  raise "You have no invites"
     #end
   end
-
+          
   def self.invite!(attributes={})
     inviter = attributes.delete(:inviter)
     request = attributes.delete(:request)
