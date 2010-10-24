@@ -24,8 +24,8 @@ class AdminInvitationsController < Devise::InvitationsController
         raise e
       end
     end
-    redirect_to after_sign_in_path_for(resource_name)
-    #redirect_to admin_root_path
+    #redirect_to after_sign_in_path_for(resource_name)
+    redirect_to admin_root_path
   end
   
   #def update

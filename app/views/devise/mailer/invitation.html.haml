@@ -6,7 +6,7 @@
       body{
         width:600px;
         font-family:'Arial','Helvetica',sans-serif;
-        font-size:14px; 
+        font-size:14px;
         color:#333;
         }
       #container{
@@ -44,28 +44,27 @@
   %body
     %header
       = image_tag '/images/diaspora_white.png'
-    #container
-      if current_admin
       %p
-        Hello #{@resource.email}!
-      %p= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @resource.invitation_token), :class => "large_text"
-      %p.small
-        If you don't want to accept the invitation, please ignore this email.
-        %br/
-        Your account won't be created until you access the link above and sign up.
-      else if current_user
-      %p
-        Hello #{@resource.email}!
-      %p
-        #{(@resource.inviters.count == 1)? ( @resource.inviters.first.real_name + " has") : (@resource.inviters.map{|inv| inv.real_name}.join(",") + " have")} invited you to #{root_url}, you can accept it through the link below.
-      - @resource.inviters.each do |inv|
-        - if @resource.invite_messages[inv.id.to_s]
-          = "#{inv.real_name}:"
-          = @resource.invite_messages[inv.id.to_s]
-          %p
-      %p= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @resource.invitation_token), :class => "large_text"
-      %p.small
-        If you don't want to accept the invitation, please ignore this email.
-        %br/
-        Your account won't be created until you access the link above and sign up.
-
+      Hello #{@resource.email}!
+    - if @resource.inviters.count >= 1
+      #container
+        %p
+          #{(@resource.inviters.count == 1)? ( @resource.inviters.first.real_name + " has") : (@resource.inviters.map{|inv| inv.real_name}.join(",") + " have")} invited you to #{root_url}, you can accept it through the link below.
+        - @resource.inviters.each do |inv|
+          - if @resource.invite_messages[inv.id.to_s]
+            = "#{inv.real_name}:"
+            = @resource.invite_messages[inv.id.to_s]
+            %p
+        %p= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @resource.invitation_token), :class => "large_text"
+        %p.small
+          If you don't want to accept the invitation, please ignore this email.
+          %br/
+          Your account won't be created until you access the link above and sign up.
+    - else
+      #container
+        %p= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @resource.invitation_token), :class => "large_text"
+        %p.small
+          If you don't want to accept the invitation, please ignore this email.
+          %br/
+          Your account won't be created until you access the link above and sign up.
+       

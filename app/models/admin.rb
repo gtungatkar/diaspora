@@ -44,54 +44,12 @@ class Admin
 
 ###Invitations############
   def invite_admin(opts = {})
-    #if self.invites > 0
-
-     # aspect_id = opts.delete(:aspect_id)
-     # if aspect_id == nil
-     #   raise "Must invite into aspect"
-     # end
-     # aspect_object = self.aspects.find_by_id(aspect_id)
-     # if !(aspect_object)
-     #   raise "Must invite to your aspect"
-     # else
-       #request = Request.instantiate(
-        #    :to => "http://local_request.example.com",
-        #    :from => self.person        #:into => aspect_id
-        #  )
-
-        u = User.find_by_email(opts[:email])
-        if u.nil?
-         Rails.logger.info "Email : #{opts[:email]}"
-         invitable = find_or_initialize_with_error_by(:email, opts[:email])
-         #invitable = User.new#(:email => opts[:email])
-
-         #invitable.email = #"try"
-        #u = User.new.invite!(:email => opts[:email])
-        Rails.logger.info "Invitable : #{invitable.email}"         
-         invitable.invite!
-       # elsif friends.include?(u.person)
-       #   raise "You are already friends with this person"
-        #elsif not u.invited?
-        #  self.send_friend_request_to(u.person, aspect_object)
-        #  return
-        #elsif u.invited? && u.inviters.include?(self)
-        #  raise "You already invited this person"
-        #else
-        #  flash[:notice] = "There is already a user with this email"
-        end
-     # end
-
-
-   #   invited_user = User.invite!(:email => opts[:email], :request => request, :inviter => self, :invite_message => opts[:invite_message]) 
-
-     # self.invites = self.invites - 1
-      #self.pending_requests << request if request
-      #request.save
-      #self.save!
-      #u
-    #else
-    #  raise "You have no invites"
-    #end
+    u = User.find_by_email(opts[:email])
+    if u.nil?
+      invitable = User.new#(:email => opts[:email])
+      invitable.email = opts[:email]
+      invitable.invite!
+    end
   end
           
   def self.invite!(attributes={})
